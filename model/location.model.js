@@ -9,6 +9,7 @@ const locationSchema = new Schema(
 			type: String,
 			required: true,
 			trim: true,
+			unique: true,
 		},
 		address: {
 			type: String,
@@ -29,6 +30,7 @@ const locationSchema = new Schema(
 			type: String,
 			required: true,
 			trim: true,
+			unique: true,
 		},
 	},
 	{
