@@ -3,6 +3,10 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controller/user.controller');
+const authController = require('../controller/auth.controller');
+
+// only admin can access the routes below
+router.use(authController.protect, authController.restrictTo('admin'));
 
 // Create a new user
 router.post('/', userController.createUser);

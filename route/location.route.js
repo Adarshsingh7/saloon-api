@@ -14,7 +14,7 @@ router.get('/', locationController.getAllLocations);
 router.get('/:id', locationController.getLocation);
 
 // Update a user by ID
-router.put('/:id', locationController.updateLocation);
+router.patch('/:id', locationController.updateLocation);
 
 // Delete a user by ID
 router.delete('/:id', locationController.deleteLocation);

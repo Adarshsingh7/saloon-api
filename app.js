@@ -7,13 +7,13 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/v1/location', locationRouter);
-app.use('/api/v1/users', userRouter);
+app.use('/api/v1/user', userRouter);
 
 app.get('/', (req, res) => {
-	res.status(200).json({
-		status: 'success',
-		data: 'route is working fine',
-	});
+  res.status(200).json({
+    status: 'success',
+    data: 'route is working fine',
+  });
 });
 
 module.exports = app;
