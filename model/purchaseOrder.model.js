@@ -4,7 +4,8 @@ const {Schema} = mongoose;
 const purchaseOrderSchema = new Schema({
     customer_id: {
         type: Schema.Types.ObjectId,
-        ref: 'Customer'
+        ref: 'Customer',
+        required: true
     },
     subscription_plan_id: {
         type: Schema.Types.ObjectId,
@@ -16,6 +17,7 @@ const purchaseOrderSchema = new Schema({
     },
     payment_mode : {
         type: String,
+        enum: ['online', 'offline'],
         required: true
     },
     transaction_details: {
@@ -28,6 +30,7 @@ const purchaseOrderSchema = new Schema({
     },
     start_time: {
         type: Date,
+        default: Date.now(),
         required: true
     }
 }, {
@@ -36,6 +39,8 @@ const purchaseOrderSchema = new Schema({
         updatedAt: 'updated_at',
     }
 });
+
+
 
 const PurchaseOrder = mongoose.model('PurchaseOrder', purchaseOrderSchema);
 module.exports = PurchaseOrder;

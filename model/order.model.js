@@ -5,6 +5,7 @@ const orderSchema = new Schema({
 customer_id: {
     type: Schema.Types.ObjectId,
     ref: 'Customer',
+    required: true,
 },
 order_type: {
     type: String,
@@ -14,7 +15,6 @@ order_type: {
 subscription_plan_id: {
     type: Schema.Types.ObjectId,
     ref: 'SubscriptionPlan',
-    required: true,
 },
 product_id: {
     type: Schema.Types.ObjectId,
@@ -26,11 +26,11 @@ total_minutes: {
 },
 status: {
     type: String,
-    enum: ['active', 'completed', 'cancelled'],
-    required: true
+    enum: ['active', 'expired', 'cancelled'],
 },
 order_date: {
     type: Date,
+    default: Date.now(),
     required: true
 },
 location_id: {

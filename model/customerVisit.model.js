@@ -16,15 +16,16 @@ const customerVisitSchema = new Schema({
     },
     location_id: {
         type: Schema.Types.ObjectId,
-        ref: 'Location'
+        ref: 'Location',
+        required: true
     },
     start_time: {
         type: Date,
+        default: Date.now(),
         required: true
     },
     end_time: {
         type: Date,
-        required: true
     }
 }, {
     timestamps: {

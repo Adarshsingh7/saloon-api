@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const subscriptionPlanSchema = new Schema({
-    customer_id: {
-        type: Schema.Types.ObjectId,
-        ref: 'Customer',
-        required: true
-    },
     plane_name: {
         type: String,
         required: true,
@@ -16,6 +11,10 @@ const subscriptionPlanSchema = new Schema({
         type: String,
         required: true,
         trim: true,
+    },
+    price: {
+       type: Number,
+       required: true,
     },
     minutes_available: {
         type: Number,

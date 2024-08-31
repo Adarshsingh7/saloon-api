@@ -51,11 +51,11 @@ const customerSchema = new Schema(
 			ref: 'Location',
 			required: true,
 		},
-		subscription_plan_id: {
-			type: Schema.Types.ObjectId,
-			ref: 'SubscriptionPlan',
-			required: true,
-		},
+		// subscription_plan_id: {
+		// 	type:[ Schema.Types.ObjectId],
+		// 	ref: 'SubscriptionPlan',
+		// 	required: true,
+		// },
 	},
 	{
 		timestamps: {
