@@ -8,35 +8,35 @@ const customerSchema = new Schema(
         user_id: {
             type: Schema.Types.ObjectId,
             ref: 'User',
-            required: true,
+            required: [true, 'User id is required'],
 
         },
 		name: {
 			type: String,
-			required: true,
+			required: [true , 'Customer name is required'],
 			trim: true,
 		},
         email: {
             type: String,
-            required: true,
-            unique: true,
+            required: [true, 'Email is required'],
+            unique: [true, 'Email should be unique'],
             trim: true,
         },
 		address: {
 			type: String,
-			required: true,
+			required: [true, 'Customer Address is required'],
 			trim: true,
 		},
         phone_number: {
             type: String,
-            required: true,
-            unique: true,
+            required: [true, 'Phone Number is required'],
+            unique: [true, 'Phone Number should be unique'],
             trim: true,
         },
 		gender: {
 			type: String,
 			enum: ['Male', 'Female', 'Other'],
-			required: true,
+			required: [true, 'Gender is required'],
 		},
         gdpr_sms_active: {
          type: Boolean,
@@ -49,7 +49,7 @@ const customerSchema = new Schema(
 		preferred_location_id: {
 			type: Schema.Types.ObjectId,
 			ref: 'Location',
-			required: true,
+			required: [true, 'Location Id is required'],
 		},
 		// subscription_plan_id: {
 		// 	type:[ Schema.Types.ObjectId],

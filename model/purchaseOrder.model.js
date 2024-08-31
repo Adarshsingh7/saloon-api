@@ -5,7 +5,7 @@ const purchaseOrderSchema = new Schema({
     customer_id: {
         type: Schema.Types.ObjectId,
         ref: 'Customer',
-        required: true
+        required: [true, 'Customer Id is required']
     },
     subscription_plan_id: {
         type: Schema.Types.ObjectId,
@@ -18,20 +18,20 @@ const purchaseOrderSchema = new Schema({
     payment_mode : {
         type: String,
         enum: ['online', 'offline'],
-        required: true
+        required: [true, 'Payment Mode is Required']
     },
     transaction_details: {
         type : String,
-        required: true
+        required: [true, 'Transaction Details is Required']
     },
     amount_received: {
         type: Number,
-        required: true
+        required: [true, 'Amount received is Required']
     },
     start_time: {
         type: Date,
         default: Date.now(),
-        required: true
+        required: [true, 'Purchase Order Start time is Required']
     }
 }, {
     timestamps: {

@@ -5,12 +5,12 @@ const orderSchema = new Schema({
 customer_id: {
     type: Schema.Types.ObjectId,
     ref: 'Customer',
-    required: true,
+    required: [true, 'Customer Id is required'],
 },
 order_type: {
     type: String,
     enum: ['subscription', 'product'],
-    required: true
+    required: [true, 'Order Type is required']
 },
 subscription_plan_id: {
     type: Schema.Types.ObjectId,
@@ -22,7 +22,7 @@ product_id: {
 },
 total_minutes: {
     type: Number,
-    required: true
+    required: [true, 'Total minutes is required']
 },
 status: {
     type: String,
@@ -31,12 +31,12 @@ status: {
 order_date: {
     type: Date,
     default: Date.now(),
-    required: true
+    required: [true, 'Order Date is required']
 },
 location_id: {
     type: Schema.Types.ObjectId,
     ref: 'Location',
-    required: true
+    required: [true, 'Location ID is required']
 },
 }, {
     timestamps: {

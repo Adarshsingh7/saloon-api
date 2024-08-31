@@ -17,12 +17,12 @@ const customerVisitSchema = new Schema({
     location_id: {
         type: Schema.Types.ObjectId,
         ref: 'Location',
-        required: true
+        required: [true, "Location Id is required"]
     },
     start_time: {
         type: Date,
         default: Date.now(),
-        required: true
+        required: [true, "Start Time is required"]
     },
     end_time: {
         type: Date,

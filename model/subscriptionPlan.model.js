@@ -4,21 +4,21 @@ const {Schema} = mongoose;
 const subscriptionPlanSchema = new Schema({
     plane_name: {
         type: String,
-        required: true,
+        required: [true, 'Subscription Plan Name is Required'],
         trim: true,
     },
     plan_description: {
         type: String,
-        required: true,
+        required: [true, 'Subscription Plan Description is Required'],
         trim: true,
     },
     price: {
        type: Number,
-       required: true,
+       required: [true, 'Subscription Price is Required'],
     },
     minutes_available: {
         type: Number,
-        required: true,
+        required: [true, 'Subscription Minutes Available is Required'],
     }
 }, {
     timestamps: {

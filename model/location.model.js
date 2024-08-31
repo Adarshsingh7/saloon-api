@@ -7,30 +7,30 @@ const locationSchema = new Schema(
 	{
 		name: {
 			type: String,
-			required: true,
+			required: [true, 'Location Name is Required'],
 			trim: true,
-			unique: true,
+			unique: [true, 'Location Name is Unique'],
 		},
 		address: {
 			type: String,
-			required: true,
+			required: [true, 'Location Address is Required'],
 			trim: true,
 		},
 		city: {
 			type: String,
-			required: true,
+			required: [true, 'Location City is Required'],
 			trim: true,
 		},
 		state: {
 			type: String,
-			required: true,
+			required: [true, 'Location State is Required'],
 			trim: true,
 		},
 		zip_code: {
 			type: String,
-			required: true,
+			required: [true, 'Location ZIP Code is Required'],
 			trim: true,
-			unique: true,
+			unique: [true, 'Location ZIP Code is Unique'],
 		},
 	},
 	{

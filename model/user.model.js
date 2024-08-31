@@ -1,7 +1,6 @@
 /** @format */
 
 const mongoose = require('mongoose');
-const Location = require('./location.model');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
@@ -9,26 +8,26 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, 'Name is required'],
       trim: true,
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
+      required: [true, 'Email is required'],
+      unique: [true, 'Email is unique'],
       trim: true,
-      lowercase: true,
+      lowercase: [true, 'Email in lowercase'],
     },
     phone_number: {
       type: String,
-      required: true,
-      unique: true,
+      required: [true, 'Phone number is required'],
+      unique: [true, 'Phone number is unique'],
       trim: true,
     },
     password: {
       type: String,
       select: false,
-      required: true,
+      required: [true, 'Password is required'],
       trim: true,
       maxlength: 100,
       minlength: 8,
@@ -36,12 +35,12 @@ const userSchema = new Schema(
     type: {
       type: String,
       enum: ['admin', 'operator'],
-      required: true,
+      required: [true, 'Type must be Admin or operator'],
     },
-    location: {
+    location_id: {
       type: mongoose.Schema.ObjectId,
       ref: 'Location',
-      required: true,
+      required: [true, 'Location Id is required'],
       trim: true,
     },
   },
