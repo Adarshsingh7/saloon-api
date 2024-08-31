@@ -24,7 +24,7 @@ const createAndSendToken = function (user, statusCode, res) {
   // console.log(req.cookie);
 
   user.password = undefined;
-  res.status(statusCode).json({
+  return res.status(statusCode).json({
     status: 'success',
     token,
     data: {
@@ -39,7 +39,7 @@ exports.signUp = catchAsync(async (req, res) => {
     email: req.body.email,
     phone_number: req.body.phone_number,
     password: req.body.password,
-    location: req.body.location,
+    location_id: req.body.location_id,
     type: req.body.type, // need to be removed in production
   });
 

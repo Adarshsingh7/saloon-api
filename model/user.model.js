@@ -51,7 +51,7 @@ const userSchema = new Schema(
 
 userSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'location',
+    path: 'location_id',
     select: 'address city state zip_code',
   });
   next();
