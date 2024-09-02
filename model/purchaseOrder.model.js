@@ -40,7 +40,29 @@ const purchaseOrderSchema = new Schema({
     }
 });
 
-
+purchaseOrderSchema.pre(/^find/, function (next) {
+    this.populate({
+      path: 'customer_id',
+      select: 'name email address phone_number',
+    });
+    next();
+  });
+  
+purchaseOrderSchema.pre(/^find/, function (next) {
+    this.populate({
+      path: 'subscription_plan_id',
+      select: 'plan_name plan_description price minutes_available',
+    });
+    next();
+  });
+  
+purchaseOrderSchema.pre(/^find/, function (next) {
+    this.populate({
+      path: 'product_id',
+      select: 'name stock price brand',
+    });
+    next();
+  });
 
 const PurchaseOrder = mongoose.model('PurchaseOrder', purchaseOrderSchema);
 module.exports = PurchaseOrder;

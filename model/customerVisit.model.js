@@ -6,6 +6,7 @@ const customerVisitSchema = new Schema(
     customer_id: {
       type: Schema.Types.ObjectId,
       ref: 'Customer',
+      required: [true, 'Customer Id is required'],
     },
     // subscription_plan_id: {
     //     type: Schema.Types.ObjectId,
@@ -39,5 +40,28 @@ const customerVisitSchema = new Schema(
   },
 );
 
+customerVisitSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'customer_id',
+    select: 'name email address phone_number preferred_location_id',
+  });
+  next();
+});
+
+customerVisitSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'order_id',
+    select: 'order_type status total_minutes',
+  });
+  next();
+});
+
+customerVisitSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'location_id',
+    select: 'address city state zip_code',
+  });
+  next();
+});
 const CustomerVisit = mongoose.model('CustomerVisit', customerVisitSchema);
 module.exports = CustomerVisit;
