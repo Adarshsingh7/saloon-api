@@ -66,6 +66,20 @@ const customerSchema = new Schema(
     },
   },
 );
+customerSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user_id',
+    select: 'name email',
+  });
+  next();
+});
 
+customerSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'preferred_location_id',
+    select: 'address city state zip_code',
+  });
+  next();
+});
 const Customer = mongoose.model('Customer', customerSchema);
 module.exports = Customer;
