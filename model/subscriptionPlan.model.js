@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const subscriptionPlanSchema = new Schema({
-    plane_name: {
+    plan_name: {
         type: String,
         required: [true, 'Subscription Plan Name is Required'],
         trim: true,

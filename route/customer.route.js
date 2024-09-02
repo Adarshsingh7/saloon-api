@@ -9,7 +9,7 @@ router.post('/', customerController.createCustomer);
 router.get('/', customerController.getAllCustomer);
 
 // Get a single Customer by ID
-router.get('/:id', customerController.getCustomer);
+router.get('/:id', customerController.getCustomer);  
 
 // Update a Customer by ID
 router.patch('/:id', customerController.updateCustomer);
