@@ -113,7 +113,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // 2) take data
   const { currentPassword, newPassword, passwordConfirm } = req.body;
-  if (newPassword != passwordConfirm)
+  if (newPassword !== passwordConfirm)
     return next(
       new AppError('new password and password confirm are not same', 403),
     );
