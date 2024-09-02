@@ -33,7 +33,7 @@ exports.updateOne = (Model) =>
       status: 'success',
       data: {
         data: document,
-        upload: res.locals,
+        // upload: res.locals,
       },
     });
   });
