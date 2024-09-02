@@ -26,7 +26,10 @@ total_minutes: {
 },
 status: {
     type: String,
-    enum: ['active', 'expired', 'cancelled'],
+    enum: {
+        values: ['inactive', 'active', 'expired', 'cancelled'],
+        message: `{VALUE} is not a valid status`
+    },
 },
 order_date: {
     type: Date,
