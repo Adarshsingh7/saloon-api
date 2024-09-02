@@ -6,10 +6,10 @@ const customerVisitSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Customer'
     },
-    subscription_plan_id: {
-        type: Schema.Types.ObjectId,
-        ref: 'SubscriptionPlan'
-    },
+    // subscription_plan_id: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'SubscriptionPlan'
+    // },
     order_id: {
         type: Schema.Types.ObjectId,
         ref: 'Order'
