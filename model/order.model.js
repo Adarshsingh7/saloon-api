@@ -13,10 +13,10 @@ const orderSchema = new Schema(
       enum: ['subscription', 'product'],
       required: [true, 'Order Type is required'],
     },
-    subscription_plan_id: {
-      type: Schema.Types.ObjectId,
-      ref: 'SubscriptionPlan',
-    },
+    // subscription_plan_id: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'SubscriptionPlan',
+    // },
     product_id: {
       type: Schema.Types.ObjectId,
       ref: 'Product',
@@ -59,13 +59,13 @@ orderSchema.pre(/^find/, function (next) {
   next();
 });
 
-orderSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'subscription_plan_id',
-    select: 'plan_name plan_description price minutes_available',
-  });
-  next();
-});
+// orderSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'subscription_plan_id',
+//     select: 'plan_name plan_description price minutes_available',
+//   });
+//   next();
+// });
 
 orderSchema.pre(/^find/, function (next) {
   this.populate({

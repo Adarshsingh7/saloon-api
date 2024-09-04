@@ -7,10 +7,10 @@ const purchaseOrderSchema = new Schema({
         ref: 'Customer',
         required: [true, 'Customer Id is required']
     },
-    subscription_plan_id: {
-        type: Schema.Types.ObjectId,
-        ref: 'SubscriptionPlan'
-    },
+    // subscription_plan_id: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'SubscriptionPlan'
+    // },
     product_id: {
         type: Schema.Types.ObjectId,
         ref: 'Product'

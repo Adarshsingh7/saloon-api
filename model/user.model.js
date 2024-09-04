@@ -34,8 +34,11 @@ const userSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ['admin', 'operator'],
-      required: [true, 'Type must be Admin or operator'],
+      enum: {
+        values: ['admin', 'user', 'customer'],
+        message: `{VALUE} is not a valid status`,
+      },
+      required: [true, 'Type must be Admin, user or customer'],
     },
     location_id: {
       type: mongoose.Schema.ObjectId,
