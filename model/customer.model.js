@@ -5,14 +5,14 @@ const { Schema } = mongoose;
 
 const customerSchema = new Schema(
   {
-    user_id: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'User id is required'],
-    },
-    name: {
+    firstName: {
       type: String,
-      required: [true, 'Customer name is required'],
+      required: [true, 'Customer firstName is required'],
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, 'Customer firstName is required'],
       trim: true,
     },
     email: {
@@ -24,6 +24,11 @@ const customerSchema = new Schema(
     address: {
       type: String,
       required: [true, 'Customer Address is required'],
+      trim: true,
+    },
+    postCode: {
+      type: String,
+      required: [true, 'Post Code is required'],
       trim: true,
     },
     phone_number: {
@@ -47,6 +52,11 @@ const customerSchema = new Schema(
     gdpr_email_active: {
       type: Boolean,
       default: false,
+    },
+    referred_by: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'User id is required'],
     },
     preferred_location_id: {
       type: Schema.Types.ObjectId,
