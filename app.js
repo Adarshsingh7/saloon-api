@@ -33,8 +33,8 @@ app.use('/api/v1/userProfile', userProfileRouter);
 
 app.use('/api/v1/service', service);
 app.use('/api/v1/serviceUsage', serviceUsageRouter);
-app.use('/api/v1/productTransaction', serviceTransactionRouter);
-app.use('/api/v1/serviceTransaction', productTransactionRouter);
+app.use('/api/v1/productTransaction', productTransactionRouter);
+app.use('/api/v1/serviceTransaction', serviceTransactionRouter);
 
 app.get('/', (req, res) => {
   res.status(200).json({
