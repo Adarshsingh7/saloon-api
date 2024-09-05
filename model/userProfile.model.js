@@ -3,8 +3,16 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const customerSchema = new Schema(
+const userProfileSchema = new Schema(
   {
+    role: {
+      type: String,
+      enum: {
+        values: ['admin', 'user', 'customer'],
+        message: `{VALUE} is not a valid status`,
+      },
+      required: [true, 'Type must be Admin, user or customer'],
+    },
     firstName: {
       type: String,
       required: [true, 'Customer firstName is required'],
@@ -43,7 +51,6 @@ const customerSchema = new Schema(
         values: ['Male', 'Female', 'Other'],
         message: '{VALUE} is not supported',
       },
-      required: [true, 'Gender is required'],
     },
     gdpr_sms_active: {
       type: Boolean,
@@ -54,20 +61,17 @@ const customerSchema = new Schema(
       default: false,
     },
     referred_by: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'User id is required'],
+      type: String,
+      required: [true, 'Referred by is required'],
     },
-    preferred_location_id: {
+    preferred_location: {
       type: Schema.Types.ObjectId,
       ref: 'Location',
-      required: [true, 'Location Id is required'],
+      required: [true, 'Location is required'],
     },
-    // subscription_plan_id: {
-    // 	type:[ Schema.Types.ObjectId],
-    // 	ref: 'SubscriptionPlan',
-    // 	required: true,
-    // },
+    avatar: {
+      type: String,
+    },
   },
   {
     timestamps: {
@@ -76,20 +80,13 @@ const customerSchema = new Schema(
     },
   },
 );
-customerSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'user_id',
-    select: 'name email',
-  });
-  next();
-});
 
-customerSchema.pre(/^find/, function (next) {
+userProfileSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'preferred_location_id',
+    path: 'preferred_location',
     select: 'address city state zip_code',
   });
   next();
 });
-const Customer = mongoose.model('Customer', customerSchema);
-module.exports = Customer;
+const UserProfile = mongoose.model('UserProfile', userProfileSchema);
+module.exports = UserProfile;

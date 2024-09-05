@@ -6,27 +6,10 @@ const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
   {
-    firstName: {
+    userName: {
       type: String,
-      required: [true, 'firstName is required'],
-      trim: true,
-    },
-    lastName: {
-      type: String,
-      required: [true, 'lastName is required'], 
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: [true, 'Email is required'],
-      unique: [true, 'Email is unique'],
-      trim: true,
-      lowercase: [true, 'Email in lowercase'],
-    },
-    phone_number: {
-      type: String,
-      required: [true, 'Phone number is required'],
-      unique: [true, 'Phone number is unique'],
+      required: [true, 'userName is required'],
+      unique: [true, 'userName is unique'],
       trim: true,
     },
     password: {
@@ -37,19 +20,10 @@ const userSchema = new Schema(
       maxlength: 100,
       minlength: 8,
     },
-    type: {
-      type: String,
-      enum: {
-        values: ['admin', 'user', 'customer'],
-        message: `{VALUE} is not a valid status`,
-      },
-      required: [true, 'Type must be Admin, user or customer'],
-    },
-    location_id: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Location',
-      required: [true, 'Location Id is required'],
-      trim: true,
+    user_profile: {
+      type: Schema.Types.ObjectId,
+      ref: 'UserProfile',
+      required: [true, 'User Profile is required'],
     },
   },
   {
@@ -59,8 +33,7 @@ const userSchema = new Schema(
 
 userSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'location_id',
-    select: 'address city state zip_code',
+    path: 'user_profile',
   });
   next();
 });
