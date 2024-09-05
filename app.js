@@ -9,7 +9,8 @@ const userRouter = require('./route/user.route');
 const locationRouter = require('./route/location.route');
 const productRouter = require('./route/products.route');
 const serviceUsageRouter = require('./route/serviceUsage.route');
-const transactionRouter = require('./route/transactions.route');
+const serviceTransactionRouter = require('./route/serviceTransactions.route');
+const productTransactionRouter = require('./route/productTransactions.route');
 const userProfileRouter = require('./route/userProfile.route');
 
 const globalErrorHandler = require('./controller/error.controller');
@@ -29,7 +30,8 @@ app.use('/api/v1/location', locationRouter);
 app.use('/api/v1/product', productRouter);
 app.use('/api/v1/service', serviceUsageRouter);
 app.use('/api/v1/userProfile', userProfileRouter);
-app.use('/api/v1/transaction', transactionRouter);
+app.use('/api/v1/transaction', serviceTransactionRouter);
+app.use('/api/v1/transaction', productTransactionRouter);
 
 app.get('/', (req, res) => {
   res.status(200).json({

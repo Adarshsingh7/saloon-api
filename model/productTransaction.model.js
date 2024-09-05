@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const transactionsSchema = new Schema(
+const productTransactionsSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
@@ -32,21 +32,21 @@ const transactionsSchema = new Schema(
   },
 );
 
-transactionsSchema.pre(/^find/, function (next) {
+productTransactionsSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
   });
   next();
 });
 
-transactionsSchema.pre(/^find/, function (next) {
+productTransactionsSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'product',
   });
   next();
 });
 
-transactionsSchema.pre(/^find/, function (next) {
+productTransactionsSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'location',
     select: 'name address',
@@ -54,5 +54,8 @@ transactionsSchema.pre(/^find/, function (next) {
   next();
 });
 
-const Transaction = mongoose.model('ProductTransaction', transactionsSchema);
-module.exports = Transaction;
+const ProductTransaction = mongoose.model(
+  'ProductTransaction',
+  productTransactionsSchema,
+);
+module.exports = ProductTransaction;
