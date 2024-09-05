@@ -61,5 +61,8 @@ serviceTransactionsSchema.pre(/^find/, function (next) {
   next();
 });
 
-const ServiceTransaction = mongoose.model('ServiceTransaction', serviceTransactionsSchema);
+const ServiceTransaction = mongoose.model(
+  'ServiceTransaction',
+  serviceTransactionsSchema,
+);
 module.exports = ServiceTransaction;

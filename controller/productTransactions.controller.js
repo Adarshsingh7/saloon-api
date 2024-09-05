@@ -1,4 +1,4 @@
-const ProductTransaction = require('../model/productTransactions.model');
+const ProductTransaction = require('../model/productTransaction.model');
 const handlerFactory = require('./handlerFactory');
 
 exports.createProductTransaction = handlerFactory.createOne(ProductTransaction);

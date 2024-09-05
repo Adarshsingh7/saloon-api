@@ -1,4 +1,4 @@
-const ServiceTransaction = require('../model/serviceTransactions.model');
+const ServiceTransaction = require('../model/serviceTransaction.model');
 const handlerFactory = require('./handlerFactory');
 
 exports.createServiceTransaction = handlerFactory.createOne(ServiceTransaction);
