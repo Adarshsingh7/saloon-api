@@ -42,6 +42,7 @@ const serviceTransactionsSchema = new Schema(
 serviceTransactionsSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
+    select: 'firstName lastName email phone_number active',
   });
   next();
 });
@@ -49,6 +50,7 @@ serviceTransactionsSchema.pre(/^find/, function (next) {
 serviceTransactionsSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'service',
+    select: 'serviceName price',
   });
   next();
 });
@@ -58,6 +60,11 @@ serviceTransactionsSchema.pre(/^find/, function (next) {
     path: 'location',
     select: 'name address',
   });
+  next();
+});
+
+serviceTransactionsSchema.pre('updateOne', function (next) {
+  this.set({ updatedAt: Date.now() });
   next();
 });
 

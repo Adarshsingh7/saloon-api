@@ -93,8 +93,15 @@ userProfileSchema.pre(/^find/, function (next) {
 userProfileSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'preferred_location',
+    select: 'name address',
   });
   next();
 });
+
+userProfileSchema.pre('updateOne', function (next) {
+  this.set({ updatedAt: Date.now() });
+  next();
+});
+
 const UserProfile = mongoose.model('UserProfile', userProfileSchema);
 module.exports = UserProfile;

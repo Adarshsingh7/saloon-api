@@ -38,5 +38,10 @@ const productsSchema = new Schema(
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } },
 );
 
+productsSchema.pre('updateOne', function (next) {
+  this.set({ updatedAt: Date.now() });
+  next();
+});
+
 const Product = mongoose.model('Product', productsSchema);
 module.exports = Product;

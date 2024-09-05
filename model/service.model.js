@@ -16,6 +16,11 @@ const serviceSchema = new Schema({
   },
 });
 
+serviceSchema.pre('updateOne', function (next) {
+  this.set({ updatedAt: Date.now() });
+  next();
+});
+
 const Service = mongoose.model('Service', serviceSchema);
 
 module.exports = Service;

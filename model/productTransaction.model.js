@@ -35,6 +35,7 @@ const productTransactionsSchema = new Schema(
 productTransactionsSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
+    select: 'firstName lastName email phone_number active',
   });
   next();
 });
@@ -42,6 +43,7 @@ productTransactionsSchema.pre(/^find/, function (next) {
 productTransactionsSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'product',
+    select: 'name brand price type',
   });
   next();
 });
@@ -51,6 +53,11 @@ productTransactionsSchema.pre(/^find/, function (next) {
     path: 'location',
     select: 'name address',
   });
+  next();
+});
+
+productTransactionsSchema.pre('updateOne', function (next) {
+  this.set({ updatedAt: Date.now() });
   next();
 });
 

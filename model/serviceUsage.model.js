@@ -24,6 +24,9 @@ const serviceUsageSchema = new Schema(
     },
   },
 );
-
+serviceUsageSchema.pre('updateOne', function (next) {
+  this.set({ updatedAt: Date.now() });
+  next();
+});
 const ServiceUsage = mongoose.model('ServiceUsage', serviceUsageSchema);
 module.exports = ServiceUsage;
