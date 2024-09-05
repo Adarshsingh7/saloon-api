@@ -43,7 +43,7 @@ const customerVisitSchema = new Schema(
 customerVisitSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'customer_id',
-    select: 'name email address phone_number preferred_location_id',
+    select: 'name email phone_number address preferred_location_id',
   });
   next();
 });

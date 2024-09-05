@@ -29,8 +29,8 @@ const locationSchema = new Schema(
 		zip_code: {
 			type: String,
 			required: [true, 'Location ZIP Code is Required'],
-			trim: true,
 			unique: [true, 'Location ZIP Code is Unique'],
+			trim: true,
 		},
 	},
 	{

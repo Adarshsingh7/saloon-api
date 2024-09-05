@@ -54,7 +54,7 @@ const orderSchema = new Schema(
 orderSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'customer_id',
-    select: 'name email address phone_number',
+    select: 'name email phone_number address',
   });
   next();
 });
