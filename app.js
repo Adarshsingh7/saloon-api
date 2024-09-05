@@ -25,6 +25,10 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(cookieParser());
 
+app.get('/abc', (req, res) => {
+  res.status(200).json('Hello World');
+});
+
 app.use('/api/v1/user', userRouter);
 app.use(auth.protect);
 app.use('/api/v1/location', locationRouter);

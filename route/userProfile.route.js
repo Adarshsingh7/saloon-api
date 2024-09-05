@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const userProfileController = require('../controller/userProfile.controller');
 
+// Get user details
+router.get('/userDetails', userProfileController.getUserDetails);
+
 // Create a new user profile
 router.post('/', userProfileController.createUserProfile);
 

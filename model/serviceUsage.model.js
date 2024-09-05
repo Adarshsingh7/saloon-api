@@ -14,7 +14,6 @@ const serviceUsageSchema = new Schema(
     },
     total_balance: {
       type: Number,
-      required: [true, 'Balance is required'],
     },
   },
   {
