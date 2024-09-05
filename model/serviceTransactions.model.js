@@ -3,14 +3,10 @@ const { Schema } = mongoose;
 
 const transactionsSchema = new Schema(
   {
-    users: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: 'UserProfile',
       required: [true, 'UserProfile Id is required'],
-    },
-    product: {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
     },
     date_time: {
       type: Date,
@@ -20,15 +16,20 @@ const transactionsSchema = new Schema(
     type: {
       type: String,
       enum: {
-        values: ['purchase', 'usage', ],
+        values: ['purchase', 'usage'],
         message: `{VALUE} is not a valid type`,
-      }
+      },
     },
     location: {
       type: Schema.Types.ObjectId,
       ref: 'Location',
       required: [true, 'Location Id is required'],
-    }
+    },
+    service: {
+      type: Schema.Types.ObjectId,
+      ref: 'Service',
+      required: [true, 'Service Id is required'],
+    },
   },
   {
     timestamps: {
@@ -47,7 +48,7 @@ transactionsSchema.pre(/^find/, function (next) {
 
 transactionsSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'product',
+    path: 'service',
   });
   next();
 });
@@ -58,7 +59,7 @@ transactionsSchema.pre(/^find/, function (next) {
     select: 'name address',
   });
   next();
-})
+});
 
-const Transaction = mongoose.model('Transaction', transactionsSchema);
+const Transaction = mongoose.model('ServiceTransaction', transactionsSchema);
 module.exports = Transaction;

@@ -12,7 +12,6 @@ const productsSchema = new Schema(
     },
     brand: {
       type: String,
-      required: [true, 'Brand Name is Required'],
       trim: true,
     },
     description: {
@@ -33,6 +32,7 @@ const productsSchema = new Schema(
         values: ['Product', 'Service'],
         message: '{VALUE} is not a valid product type',
       },
+      default: 'Product',
     },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } },

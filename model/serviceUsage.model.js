@@ -8,11 +8,11 @@ const serviceUsageSchema = new Schema(
       ref: 'UserProfile',
       required: [true, 'User Id is required'],
     },
-    total_spend: {
+    available_balance: {
       type: Number,
       required: [true, 'Total Spend is required'],
     },
-    balance: {
+    total_balance: {
       type: Number,
       required: [true, 'Balance is required'],
     },
