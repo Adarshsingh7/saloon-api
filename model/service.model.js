@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const serviceSchema = new Schema({
-  name: {
+  serviceName: {
     type: String,
     required: [true, 'Service Name is required'],
   },
-  minutes: {
+  minutesAvailable: {
     type: Number,
     required: [true, 'Minutes is required'],
   },
