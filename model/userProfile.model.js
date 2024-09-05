@@ -11,7 +11,7 @@ const userProfileSchema = new Schema(
         values: ['admin', 'user', 'customer'],
         message: `{VALUE} is not a valid status`,
       },
-      required: [true, 'Type must be Admin, user or customer'],
+      default: 'customer',
     },
     firstName: {
       type: String,
