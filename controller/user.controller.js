@@ -1,9 +1,9 @@
 /** @format */
-const User = require('../model/user.model');
+const UserProfile = require('../model/userProfile.model');
 const handlerFactory = require('./handlerFactory');
 
-exports.createUser = handlerFactory.createOne(User);
-exports.getUser = handlerFactory.getOne(User);
-exports.getAllUser = handlerFactory.getAll(User);
-exports.updateUser = handlerFactory.updateOne(User);
-exports.deleteUser = handlerFactory.deleteOne(User);
+exports.createUser = handlerFactory.createOne(UserProfile);
+exports.getUser = handlerFactory.getOne(UserProfile);
+exports.getAllUser = handlerFactory.getAll(UserProfile);
+exports.updateUser = handlerFactory.updateOne(UserProfile);
+exports.deleteUser = handlerFactory.deleteOne(UserProfile);

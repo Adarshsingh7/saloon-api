@@ -20,6 +20,12 @@ const userSchema = new Schema(
       maxlength: 100,
       minlength: 8,
     },
+    passwordResetToken: {
+      type: String,
+    },
+    passwordResetExpires: {
+      type: Date,
+    },
     user_profile: {
       type: Schema.Types.ObjectId,
       ref: 'UserProfile',
@@ -54,6 +60,20 @@ userSchema.methods.correctPassword = async function (
   } catch (err) {
     console.log('an error occoured: ', err);
   }
+};
+
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  console.log({ resetToken, encryptedToken: this.passwordResetToken });
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 const User = mongoose.model('User', userSchema);

@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const serviceUsageSchema = new Schema(
   {
-    user_id: {
+    users: {
       type: Schema.Types.ObjectId,
       ref: 'UserProfile',
       required: [true, 'User Id is required'],
