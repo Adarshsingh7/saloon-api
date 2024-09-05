@@ -72,6 +72,10 @@ const userProfileSchema = new Schema(
     avatar: {
       type: String,
     },
+    active: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: {
@@ -80,11 +84,15 @@ const userProfileSchema = new Schema(
     },
   },
 );
+userProfileSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  // this.find({ active: true });
+  next();
+});
 
 userProfileSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'preferred_location',
-    select: 'address city state zip_code',
   });
   next();
 });
