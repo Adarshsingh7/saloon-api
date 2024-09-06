@@ -5,7 +5,7 @@ const userProfileController = require('../controller/userProfile.controller');
 // Get user details
 router.get('/userDetails', userProfileController.getUserDetails);
 router.post('/updateProfile', userProfileController.updateUserImage);
-router.post('/sendEmail', userProfileController.sendTestEmail);
+// router.post('sendEmail', userProfileController.sendTestEmail);
 // Create a new user profile
 router.post('/', userProfileController.createUserProfile);
 

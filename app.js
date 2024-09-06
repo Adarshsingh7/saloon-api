@@ -15,7 +15,7 @@ const serviceTransactionRouter = require('./route/serviceTransactions.route');
 const productTransactionRouter = require('./route/productTransactions.route');
 const userProfileRouter = require('./route/userProfile.route');
 const service = require('./route/service.route');
-
+const featureRouter = require('./route/feature.route');
 const globalErrorHandler = require('./controller/error.controller');
 const AppError = require('./utils/appError');
 const cookieParser = require('cookie-parser');
@@ -82,6 +82,7 @@ app.use(
   authController.protect,
   serviceTransactionRouter,
 );
+app.use('/api/v1', authController.protect, featureRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
