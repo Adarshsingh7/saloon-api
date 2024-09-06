@@ -3,8 +3,10 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const authController = require('./controller/auth.controller');
+const swaggerFile = require('./swagger_output.json');
 
-const auth = require('./controller/auth.controller');
 const userRouter = require('./route/user.route');
 const locationRouter = require('./route/location.route');
 const productRouter = require('./route/products.route');
@@ -25,27 +27,54 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(cookieParser());
 
-app.get('/abc', (req, res) => {
-  res.status(200).json('Hello World');
-});
-
-app.use('/api/v1/user', userRouter);
-app.use(auth.protect);
-app.use('/api/v1/location', locationRouter);
-app.use('/api/v1/product', productRouter);
-app.use('/api/v1/userProfile', userProfileRouter);
-
-app.use('/api/v1/service', service);
-app.use('/api/v1/serviceUsage', serviceUsageRouter);
-app.use('/api/v1/productTransaction', productTransactionRouter);
-app.use('/api/v1/serviceTransaction', serviceTransactionRouter);
-
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
     data: 'route is working fine',
   });
 });
+
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+/**
+ * @typedef Product
+ * @property {string} name.required - The name of the product
+ * @property {number} price.required - The price of the product
+ * @property {string} category - The category of the product
+ */
+
+/**
+ * @route POST /api/v1/products
+ * @group Products - Operations about products
+ * @param {Product.model} product.body.required - The product object
+ * @security bearerAuth
+ * @returns {object} 200 - Success response
+ * @returns {Error} 400 - Bad request
+ */
+app.post('/api/v1/products', authController.protect, (req, res) => {
+  // Product creation logic here
+  res.status(200).json({
+    status: 'success',
+    message: 'Product created successfully',
+  });
+});
+
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/location', authController.protect, locationRouter);
+app.use('/api/v1/product', productRouter);
+app.use('/api/v1/userProfile', authController.protect, userProfileRouter);
+app.use('/api/v1/service', authController.protect, service);
+app.use('/api/v1/serviceUsage', authController.protect, serviceUsageRouter);
+app.use(
+  '/api/v1/productTransaction',
+  authController.protect,
+  productTransactionRouter,
+);
+app.use(
+  '/api/v1/serviceTransaction',
+  authController.protect,
+  serviceTransactionRouter,
+);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
