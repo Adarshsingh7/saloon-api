@@ -16,6 +16,7 @@ router.patch('/updatePassword', authController.updatePassword);
 
 // only admin can access the routes below
 router.use(authController.restrictTo('admin'));
+router.post('/createUser', userController.createNewUser);
 
 // Create a new user
 // router.post('/', userController.createUser);

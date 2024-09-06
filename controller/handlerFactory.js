@@ -74,7 +74,8 @@ exports.getAll = (Model) =>
       .filter()
       .sort()
       .limitFields()
-      .paginate();
+      .paginate()
+      .dateRange();
     const doc = await features.query;
 
     // SEND RESPONSE

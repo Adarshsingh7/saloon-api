@@ -35,31 +35,44 @@ const createAndSendToken = function (user, statusCode, res) {
   });
 };
 
-exports.signUp = catchAsync(async (req, res) => {
-  const newUserProfile = await UserProfile.create({
-    ...req.body,
-    role: undefined,
-  });
+exports.signUp = async (req, res, next) => {
+  let newUserProfileCreated = false;
+  let newUserCreated = false;
+  let newUserProfileId = '';
+  try {
+    const newUserProfile = await UserProfile.create({
+      ...req.body,
+      role: undefined,
+    });
+    newUserProfileCreated = true;
+    newUserProfileId = newUserProfile._id;
 
-  // Create a new user with the created UserProfile reference
-  const newUser = await User.create({
-    ...req.body,
-    user_profile: newUserProfile._id,
-  });
+    // Create a new user with the created UserProfile reference
+    const newUser = await User.create({
+      ...req.body,
+      user_profile: newUserProfile._id,
+    });
+    newUserCreated = true;
 
-  // Send the plain user object to the token creation function
-  createAndSendToken(newUser, 201, res);
-});
+    // Send the plain user object to the token creation function
+    createAndSendToken(newUser, 201, res);
+  } catch (error) {
+    if (newUserProfileCreated && !newUserCreated) {
+      await UserProfile.findByIdAndDelete(newUserProfileId);
+    }
+    next(new AppError('failed to create the user' + error.message, 400));
+  }
+};
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { userName, password } = req.body;
 
   // checking user has input email and password
-  if (!email || !password)
+  if (!userName || !password)
     return next(new AppError('enter email and password', 400));
 
   // check weather user is present in data base or not
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ userName }).select('+password');
 
   // checking password from the data base
   // const correct = await user.correctPassword(password, user.password);
@@ -98,13 +111,14 @@ exports.protect = catchAsync(async (req, res, next) => {
   //     );
 
   req.user = freshUser;
+  req.user.role = freshUser.user_profile.role;
   // req.locals.user = freshUser;
   next();
 });
 
-exports.restrictTo = function (...types) {
+exports.restrictTo = function (...roles) {
   return (req, res, next) => {
-    if (!types.includes(req.user.type))
+    if (!roles.includes(req.user.role))
       return next(
         new AppError('you not have permision to perform this action', 403),
       );
