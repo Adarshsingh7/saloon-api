@@ -58,3 +58,4 @@ exports.updateUserImage = catchAsync(async (req, res) => {
     data: updatedProfile,
   });
 });
+
