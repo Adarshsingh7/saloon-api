@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: '.env' });
 const app = require('./app');
 const mongoose = require('mongoose');
+const { cloudinaryConnect } = require('./cloudinary/cloudinary');
 
 mongoose
   .connect(process.env.DBR)
@@ -14,6 +15,7 @@ mongoose
     console.log('DB connection failed');
     console.log(err);
   });
+cloudinaryConnect();
 
 const PORT = process.env.PORT || 3000;
 

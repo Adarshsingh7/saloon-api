@@ -19,6 +19,7 @@ const service = require('./route/service.route');
 const globalErrorHandler = require('./controller/error.controller');
 const AppError = require('./utils/appError');
 const cookieParser = require('cookie-parser');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 
@@ -26,6 +27,12 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/',
+  }),
+);
 
 app.get('/', (req, res) => {
   res.status(200).json({

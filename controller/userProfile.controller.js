@@ -6,6 +6,7 @@ const ProductTransaction = require('../model/productTransaction.model');
 const ServiceTransaction = require('../model/serviceTransaction.model');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const { imageUpload } = require('../utils/imageUpload');
 
 exports.createUserProfile = handlerFactory.createOne(UserProfile);
 exports.getUserProfile = handlerFactory.getOne(UserProfile);
@@ -31,5 +32,29 @@ exports.getUserDetails = catchAsync(async (req, res, next) => {
       productTransactions,
       serviceTransactions,
     },
+  });
+});
+
+exports.updateUserImage = catchAsync(async (req, res) => {
+  const user = req.body.userId;
+  const userImage = req.files.userImage;
+
+  const image = await imageUpload(
+    userImage,
+    process.env.FOLDER_NAME,
+    1000,
+    1000,
+  );
+  console.log(image.secure_url);
+
+  const updatedProfile = await UserProfile.findByIdAndUpdate(
+    user,
+    { avatar: image.secure_url },
+    { new: true },
+  );
+  res.status(200).json({
+    status: 'success',
+    message: 'User Image updated successfully',
+    data: updatedProfile,
   });
 });
