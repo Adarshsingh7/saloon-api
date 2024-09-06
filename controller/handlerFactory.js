@@ -69,7 +69,6 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res) => {
-    console.log({ Model });
     const features = new APIFeatures(Model.find(), req.query)
       .filter()
       .sort()

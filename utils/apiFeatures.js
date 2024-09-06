@@ -59,22 +59,23 @@ class APIFeatures {
       // If both `from` and `to` are provided, filter by range
       if (!isNaN(from.getTime()) && !isNaN(to.getTime())) {
         this.query = this.query.find({
-          createdAt: { $gte: from, $lte: to },
+          created_at: { $gte: from, $lte: to },
         });
       }
       // If only `from` is provided, get all records from that date
       else if (!isNaN(from.getTime())) {
         this.query = this.query.find({
-          createdAt: { $gte: from },
+          created_at: { $gte: from },
         });
       }
       // If only `to` is provided, get all records until that date
       else if (!isNaN(to.getTime())) {
         this.query = this.query.find({
-          createdAt: { $lte: to },
+          created_at: { $lte: to },
         });
       }
     }
+    console.log(this.queryString);
 
     return this;
   }

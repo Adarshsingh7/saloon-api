@@ -9,5 +9,6 @@ const authController = require('../controller/auth.controller');
 router.use(authController.restrictTo('admin'));
 router.get('/totalSales', featureController.getAllSales);
 router.get('/salesByLocation', featureController.getSalesByLocation);
+router.get('/topCustomer', featureController.getTopCustomer);
 
 module.exports = router;
