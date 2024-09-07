@@ -7,12 +7,24 @@ const ServiceTransaction = require('../model/serviceTransaction.model');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const { imageUpload } = require('../utils/imageUpload');
+const User = require('../model/user.model');
 
 exports.createUserProfile = handlerFactory.createOne(UserProfile);
 exports.getUserProfile = handlerFactory.getOne(UserProfile);
 exports.getAllUserProfile = handlerFactory.getAll(UserProfile);
 exports.updateUserProfile = handlerFactory.updateOne(UserProfile);
 exports.deleteUserProfile = handlerFactory.deleteOne(UserProfile);
+
+// this function creates a user but will not return intead it will call next function
+exports.createUserProfileNext = catchAsync(async (req, res, next) => {
+  if (!req.body.userName || !req.body.password || req.body.password.length < 8)
+    return new AppError('Please provide username and password', 400);
+  if (await User.findOne({ userName: req.body.userName }))
+    return next(new AppError('User already exists', 400));
+  const newUserProfile = await UserProfile.create(req.body);
+  req.body.user = newUserProfile._id;
+  next();
+});
 
 // we need userId for which information is to be needed
 exports.getUserDetails = catchAsync(async (req, res, next) => {
@@ -58,4 +70,3 @@ exports.updateUserImage = catchAsync(async (req, res) => {
     data: updatedProfile,
   });
 });
-

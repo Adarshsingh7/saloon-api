@@ -3,17 +3,15 @@ const { Schema } = mongoose;
 
 const serviceUsageSchema = new Schema(
   {
-    users: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: 'UserProfile',
       required: [true, 'User Id is required'],
     },
     available_balance: {
       type: Number,
+      default: 0,
       required: [true, 'Total Spend is required'],
-    },
-    total_balance: {
-      type: Number,
     },
   },
   {

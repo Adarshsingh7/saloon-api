@@ -16,28 +16,7 @@ router.patch('/updatePassword', authController.updatePassword);
 
 // only admin can access the routes below
 router.use(authController.restrictTo('admin'));
-router.post('/createUser', userController.createNewUser);
 
-// Create a new user
-// router.post('/', userController.createUser);
-
-// Get all users
-// router.get('/', userController.getAllUser);
-
-/**
- * @swagger
- * /user:
- *   get:
- *     summary: Get all the user of the application
- *     description: Get employee by ID.
- *     responses:
- *       '200':
- *         description: A successful response
- *       '404':
- *         description: Employee not found
- *       '500':
- *         description: Internal server error
- */
 router
   .route('/')
   .post(userController.createUser)

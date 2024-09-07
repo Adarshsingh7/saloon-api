@@ -43,29 +43,6 @@ app.get('/', (req, res) => {
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-/**
- * @typedef Product
- * @property {string} name.required - The name of the product
- * @property {number} price.required - The price of the product
- * @property {string} category - The category of the product
- */
-
-/**
- * @route POST /api/v1/products
- * @group Products - Operations about products
- * @param {Product.model} product.body.required - The product object
- * @security bearerAuth
- * @returns {object} 200 - Success response
- * @returns {Error} 400 - Bad request
- */
-app.post('/api/v1/products', authController.protect, (req, res) => {
-  // Product creation logic here
-  res.status(200).json({
-    status: 'success',
-    message: 'Product created successfully',
-  });
-});
-
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/location', authController.protect, locationRouter);
 app.use('/api/v1/product', productRouter);
