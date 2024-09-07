@@ -23,6 +23,7 @@ exports.createUserProfileNext = catchAsync(async (req, res, next) => {
     return next(new AppError('User already exists', 400));
   const newUserProfile = await UserProfile.create(req.body);
   req.body.user = newUserProfile._id;
+  req.body.user_profile = newUserProfile._id;
   next();
 });
 
