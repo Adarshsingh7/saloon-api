@@ -15,7 +15,7 @@ router.use(authController.restrictTo('admin'));
 
 router.post('/createCustomer', createUserProfileNext, createServiceUsage);
 
-router.post('/createUser', createUserProfileNext, createUser, createUser);
+router.post('/createUser', createUserProfileNext, createUser);
 router.get('/totalSales', featureController.getAllSales);
 router.get('/salesByLocation', featureController.getSalesByLocation);
 router.get('/topCustomer', featureController.getTopCustomer);
