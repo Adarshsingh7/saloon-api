@@ -23,6 +23,11 @@ const productTransactionsSchema = new Schema(
       ref: 'Product',
       required: [true, 'Product Id is required'],
     },
+    quantity: {
+      type: Number,
+      defaultValue: 1,
+      required : [true, "Minimum quantity is Required"]
+    }
   },
   {
     timestamps: {
