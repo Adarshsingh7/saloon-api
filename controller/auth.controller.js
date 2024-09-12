@@ -69,7 +69,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // checking user has input email and password
   if (!userName || !password)
-    return next(new AppError('enter email and password', 400));
+    return next(new AppError('enter userName and password', 400));
 
   // check weather user is present in data base or not
   const user = await User.findOne({ userName }).select('+password');
@@ -77,7 +77,7 @@ exports.login = catchAsync(async (req, res, next) => {
   // checking password from the data base
   // const correct = await user.correctPassword(password, user.password);
   if (!user || !(await user.correctPassword(password, user.password)))
-    return next(new AppError('incorrect email or password', 403));
+    return next(new AppError('incorrect user name or password', 403));
 
   createAndSendToken(user, 200, res);
 });
