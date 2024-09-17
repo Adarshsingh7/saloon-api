@@ -21,12 +21,12 @@ const locationSchema = new Schema(
       required: [true, 'Location City is Required'],
       trim: true,
     },
-    state: {
+    phone_number: {
       type: String,
-      required: [true, 'Location State is Required'],
+      required: [true, 'Location Phone Number is Required'],
       trim: true,
     },
-    zip_code: {
+    postCode: {
       type: String,
       required: [true, 'Location ZIP Code is Required'],
       unique: [true, 'Location ZIP Code is Unique'],
