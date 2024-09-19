@@ -8,6 +8,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const { imageUpload } = require('../utils/imageUpload');
 const User = require('../model/user.model');
+const ServiceUsage = require('../model/serviceUsage.model');
 
 exports.createUserProfile = handlerFactory.createOne(UserProfile);
 exports.getUserProfile = handlerFactory.getOne(UserProfile);
@@ -25,6 +26,80 @@ exports.createUserProfileNext = catchAsync(async (req, res, next) => {
   req.body.user = newUserProfile._id;
   req.body.user_profile = newUserProfile._id;
   next();
+});
+
+exports.deleteUserProfileNext = catchAsync(async (req, res, next) => {
+  const userId = req.body.userId;
+  if (!userId) {
+    return next(new AppError('Please provide a valid user ID', 400));
+  }
+
+  // Find the user by ID and populate the user_profile field
+  const user = await User.findOne({ user_profile: userId });
+
+  // Check if the user exists
+  if (!user) {
+    return next(new AppError('User does not exist', 404));
+  }
+
+  // Delete the user profile
+  const userProfileDeletion = await UserProfile.findByIdAndDelete(userId);
+
+  // If user profile deletion failed
+  if (!userProfileDeletion) {
+    return next(new AppError('Failed to delete user profile', 500));
+  }
+
+  // Delete the user
+  await User.findByIdAndDelete(user._id);
+
+  res.status(204).json({
+    status: 'success',
+    message: 'User and user profile successfully deleted',
+  });
+});
+
+exports.deleteCustomerProfileNext = catchAsync(async (req, res, next) => {
+  const customerId = req.body.customerId; // Assuming customerId is sent in the request body
+
+  // Check if customerId is provided
+  if (!customerId) {
+    return next(new AppError('Please provide a valid Customer ID', 400));
+  }
+
+  // Find the UserProfile by the customerId
+  const userProfile = await UserProfile.findById(customerId);
+
+  // Check if the UserProfile exists
+  if (!userProfile) {
+    return next(new AppError('Customer profile not found', 404));
+  }
+
+  // Delete the ServiceUsage associated with the UserProfile
+  const serviceUsageDeletion = await ServiceUsage.deleteMany({
+    user: customerId,
+  });
+
+  // Check if the service usage was successfully deleted
+  if (!serviceUsageDeletion) {
+    return next(
+      new AppError('Failed to delete service usage for this customer', 500),
+    );
+  }
+
+  // Delete the UserProfile
+  const userProfileDeletion = await UserProfile.findByIdAndDelete(customerId);
+
+  // Check if the user profile was successfully deleted
+  if (!userProfileDeletion) {
+    return next(new AppError('Failed to delete customer profile', 500));
+  }
+
+  // Return success response
+  res.status(204).json({
+    status: 'success',
+    message: 'Customer profile and service usage successfully deleted',
+  });
 });
 
 // we need userId for which information is to be needed
