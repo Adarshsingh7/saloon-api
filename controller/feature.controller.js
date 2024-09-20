@@ -106,3 +106,65 @@ exports.getTopCustomer = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getAllServiceTransactionByUser = catchAsync(async (req, res, next) => {
+  const { userId } = req.body; // Assuming userId is passed in the body
+
+  // If userId is not provided, throw an error
+  if (!userId) {
+    return next(new AppError('User ID is required', 400));
+  }
+
+  // Find service transactions by user ID
+  const serviceTransactions = await ServiceTransaction.find({ user: userId });
+
+  // If no transactions are found for the user, return an empty array
+  if (!serviceTransactions || serviceTransactions.length === 0) {
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        serviceTransactions: [],
+      },
+    });
+  }
+
+  // Respond with the list of transactions
+  res.status(200).json({
+    status: 'success',
+    results: serviceTransactions.length,
+    data: {
+      serviceTransactions,
+    },
+  });
+});
+
+exports.getAllProductTransactionByUser = catchAsync(async (req, res, next) => {
+  const { userId } = req.body; // Assuming userId is passed in the body
+
+  // If userId is not provided, throw an error
+  if (!userId) {
+    return next(new AppError('User ID is required', 400));
+  }
+
+  // Find service transactions by user ID
+  const productTransactions = await ProductTransaction.find({ user: userId });
+
+  // If no transactions are found for the user, return an empty array
+  if (!productTransactions || productTransactions.length === 0) {
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        productTransactions: [],
+      },
+    });
+  }
+
+  // Respond with the list of transactions
+  res.status(200).json({
+    status: 'success',
+    results: productTransactions.length,
+    data: {
+      productTransactions,
+    },
+  });
+});

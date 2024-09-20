@@ -70,6 +70,7 @@ exports.createServiceTransaction = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 exports.getServiceTransaction = handlerFactory.getOne(ServiceTransaction);
 exports.getAllServiceTransaction = handlerFactory.getAll(ServiceTransaction);
 exports.updateServiceTransaction = handlerFactory.updateOne(ServiceTransaction);

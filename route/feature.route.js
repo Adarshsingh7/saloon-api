@@ -22,5 +22,12 @@ router.delete('/deleteUser', deleteUserProfileNext);
 router.get('/totalSales', featureController.getAllSales);
 router.get('/salesByLocation', featureController.getSalesByLocation);
 router.get('/topCustomer', featureController.getTopCustomer);
-
+router.get(
+  '/productTransactions',
+  featureController.getAllProductTransactionByUser,
+);
+router.get(
+  '/serviceTransactions',
+  featureController.getAllServiceTransactionByUser,
+);
 module.exports = router;
