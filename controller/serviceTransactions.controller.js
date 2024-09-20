@@ -3,10 +3,20 @@ const catchAsync = require('../utils/catchAsync');
 const handlerFactory = require('./handlerFactory');
 const ServiceUsage = require('../model/serviceUsage.model');
 const AppError = require('../utils/appError');
+const Service = require('../model/service.model');
 
 exports.createServiceTransaction = catchAsync(async (req, res, next) => {
-  const { user, quantity, type, location, service } = req.body;
+  const { user, type, location, service } = req.body;
 
+  // validate that serviceID is provided
+  if (!service) {
+    return next(new AppError('Service ID is required', 400));
+  }
+  // quantity validation
+  const serviceDetails = await Service.findById(service);
+  if (!serviceDetails) {
+    return next(new AppError('Service not found', 404));
+  }
   // Find the user's service usage balance
   let serviceUsage = await ServiceUsage.findOne({ user });
 
@@ -17,13 +27,18 @@ exports.createServiceTransaction = catchAsync(async (req, res, next) => {
       available_balance: 0, // Default to 0 if not found
     });
   }
-
+  let quantity;
   // Adjust balance based on transaction type
   if (type === 'purchase') {
     // Increase the available balance for purchases
+    quantity = serviceDetails.minutesAvailable;
     serviceUsage.available_balance += quantity;
   } else if (type === 'usage') {
     // Decrease the available balance for usages
+    quantity = req.body.quantity;
+    if (isNaN(quantity) || quantity <= 0) {
+      return next(new AppError('Invalid quantity value', 400));
+    }
     if (serviceUsage.available_balance < quantity) {
       return next(
         new AppError('Insufficient balance for this service usage', 400),

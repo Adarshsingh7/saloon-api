@@ -10,7 +10,6 @@ const serviceTransactionsSchema = new Schema(
     },
     quantity: {
       type: Number,
-      required: [true, 'Transaction quantity time is Required'],
     },
     type: {
       type: String,
