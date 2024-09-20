@@ -22,11 +22,11 @@ router.delete('/deleteUser', deleteUserProfileNext);
 router.get('/totalSales', featureController.getAllSales);
 router.get('/salesByLocation', featureController.getSalesByLocation);
 router.get('/topCustomer', featureController.getTopCustomer);
-router.get(
+router.post(
   '/productTransactions',
   featureController.getAllProductTransactionByUser,
 );
-router.get(
+router.post(
   '/serviceTransactions',
   featureController.getAllServiceTransactionByUser,
 );
