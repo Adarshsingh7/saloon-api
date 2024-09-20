@@ -11,7 +11,7 @@ const serviceUsageSchema = new Schema(
     available_balance: {
       type: Number,
       default: 0,
-      required: [true, 'Total Spend is required'],
+      required: [true, 'Total Available Balance is required'],
     },
   },
   {

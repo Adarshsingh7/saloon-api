@@ -8,10 +8,9 @@ const serviceTransactionsSchema = new Schema(
       ref: 'UserProfile',
       required: [true, 'UserProfile Id is required'],
     },
-    date_time: {
-      type: Date,
-      default: Date.now(),
-      required: [true, 'Transaction Date time is Required'],
+    quantity: {
+      type: Number,
+      required: [true, 'Transaction quantity time is Required'],
     },
     type: {
       type: String,
