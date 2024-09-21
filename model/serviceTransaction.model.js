@@ -26,7 +26,9 @@ const serviceTransactionsSchema = new Schema(
     service: {
       type: Schema.Types.ObjectId,
       ref: 'Service',
-      required: [true, 'Service Id is required'],
+      required: function () {
+        return this.type === 'purchase'; // Service is required only if the type is 'purchase'
+      },
     },
   },
   {

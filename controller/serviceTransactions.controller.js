@@ -6,69 +6,88 @@ const AppError = require('../utils/appError');
 const Service = require('../model/service.model');
 
 exports.createServiceTransaction = catchAsync(async (req, res, next) => {
-  const { user, type, location, service } = req.body;
+  const { user, type, location, service, quantity } = req.body;
+  if (type === 'purchase') {
+    if (!service) {
+      return next(new AppError('Service ID is required', 400));
+    }
 
-  // validate that serviceID is provided
-  if (!service) {
-    return next(new AppError('Service ID is required', 400));
-  }
-  // quantity validation
-  const serviceDetails = await Service.findById(service);
-  if (!serviceDetails) {
-    return next(new AppError('Service not found', 404));
-  }
-  // Find the user's service usage balance
-  let serviceUsage = await ServiceUsage.findOne({ user });
+    const serviceDetails = await Service.findById(service);
+    if (!serviceDetails) {
+      return next(new AppError('Service not found', 404));
+    }
 
-  // If no record exists for the user, create one with default balance
-  if (!serviceUsage) {
-    serviceUsage = await ServiceUsage.create({
+    const purchasedQuantity = serviceDetails.minutesAvailable;
+    let serviceUsage = await ServiceUsage.findOne({ user });
+
+    if (!serviceUsage) {
+      serviceUsage = await ServiceUsage.create({
+        user,
+        available_balance: 0, // Default balance if no record found
+      });
+    }
+
+    serviceUsage.available_balance += purchasedQuantity;
+    await serviceUsage.save();
+
+    // Create the purchase transaction
+    const serviceTransaction = await ServiceTransaction.create({
       user,
-      available_balance: 0, // Default to 0 if not found
+      quantity: purchasedQuantity,
+      type,
+      location,
+      service,
+    });
+
+    return res.status(201).json({
+      status: 'success',
+      data: {
+        serviceTransaction,
+        available_balance: serviceUsage.available_balance,
+      },
     });
   }
-  let quantity;
-  // Adjust balance based on transaction type
-  if (type === 'purchase') {
-    // Increase the available balance for purchases
-    quantity = serviceDetails.minutesAvailable;
-    serviceUsage.available_balance += quantity;
-  } else if (type === 'usage') {
-    // Decrease the available balance for usages
-    quantity = req.body.quantity;
+  if (type === 'usage') {
+    let serviceUsage = await ServiceUsage.findOne({ user });
+
+    // If no record exists for the user, create one with default balance
+    if (!serviceUsage) {
+      serviceUsage = await ServiceUsage.create({
+        user,
+        available_balance: 0, // Default to 0 if not found
+      });
+    }
+
     if (isNaN(quantity) || quantity <= 0) {
       return next(new AppError('Invalid quantity value', 400));
     }
+
     if (serviceUsage.available_balance < quantity) {
       return next(
         new AppError('Insufficient balance for this service usage', 400),
       );
     }
+
     serviceUsage.available_balance -= quantity;
-  } else {
-    return next(new AppError('Invalid transaction type', 400));
+    await serviceUsage.save();
+
+    // Create the usage transaction (without service ID)
+    const serviceTransaction = await ServiceTransaction.create({
+      user,
+      quantity,
+      type,
+      location,
+    });
+
+    return res.status(201).json({
+      status: 'success',
+      data: {
+        serviceTransaction,
+        available_balance: serviceUsage.available_balance,
+      },
+    });
   }
-
-  // Save the updated balance
-  await serviceUsage.save();
-
-  // Create the service transaction record
-  const serviceTransaction = await ServiceTransaction.create({
-    user,
-    quantity,
-    type,
-    location,
-    service,
-  });
-
-  // Respond with the new transaction
-  res.status(201).json({
-    status: 'success',
-    data: {
-      serviceTransaction,
-      available_balance: serviceUsage.available_balance,
-    },
-  });
+  return next(new AppError('Invalid transaction type', 400));
 });
 
 exports.getServiceTransaction = handlerFactory.getOne(ServiceTransaction);

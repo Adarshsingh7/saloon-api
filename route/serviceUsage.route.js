@@ -4,7 +4,7 @@ const serviceUsageController = require('../controller/serviceUsage.controller');
 
 // Create a new service usage
 router.post('/', serviceUsageController.createServiceUsage);
-
+router.post('/user', serviceUsageController.getServiceUsageByUserId);
 // Get all service usage
 router.get('/', serviceUsageController.getAllServiceUsage);
 
