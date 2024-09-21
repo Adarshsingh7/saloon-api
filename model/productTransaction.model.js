@@ -8,11 +8,11 @@ const productTransactionsSchema = new Schema(
       ref: 'UserProfile',
       required: [true, 'UserProfile Id is required'],
     },
-    date_time: {
-      type: Date,
-      default: Date.now(),
-      required: [true, 'Transaction Date time is Required'],
-    },
+    // date_time: {
+    //   type: Date,
+    //   default: Date.now(),
+    //   required: [true, 'Transaction Date time is Required'],
+    // },
     location: {
       type: Schema.Types.ObjectId,
       ref: 'Location',
@@ -26,8 +26,8 @@ const productTransactionsSchema = new Schema(
     quantity: {
       type: Number,
       defaultValue: 1,
-      required : [true, "Minimum quantity is Required"]
-    }
+      required: [true, 'Minimum quantity is Required'],
+    },
   },
   {
     timestamps: {
