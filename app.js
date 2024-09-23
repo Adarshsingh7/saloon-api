@@ -24,20 +24,9 @@ const fileUpload = require('express-fileupload');
 const app = express();
 
 app.use(express.json());
-const allowedOrigins = [
-  'http://localhost:3000', // Your local development URL
-  'https://salon-dash-board.vercel.app', // Your Vercel deployment URL
-];
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      // Allow requests with no origin (like mobile apps, Postman)
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*',
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
