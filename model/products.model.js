@@ -17,7 +17,6 @@ const productsSchema = new Schema(
     description: {
       type: String,
       trim: true,
-      required: [true, 'Product Description is Required'],
     },
     price: {
       type: Number,
