@@ -50,7 +50,7 @@ serviceTransactionsSchema.pre(/^find/, function (next) {
 serviceTransactionsSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'service',
-    select: 'serviceName price',
+    select: 'serviceName price minutesAvailable',
   });
   next();
 });
