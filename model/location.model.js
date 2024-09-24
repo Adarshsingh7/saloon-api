@@ -13,12 +13,12 @@ const locationSchema = new Schema(
     },
     address: {
       type: String,
-      required: [true, 'Location Address is Required'],
+      // required: [true, 'Location Address is Required'],
       trim: true,
     },
     city: {
       type: String,
-      required: [true, 'Location City is Required'],
+      // required: [true, 'Location City is Required'],
       trim: true,
     },
     phone_number: {
@@ -28,7 +28,7 @@ const locationSchema = new Schema(
     },
     postCode: {
       type: String,
-      required: [true, 'Location postCode Code is Required'],
+      // required: [true, 'Location postCode Code is Required'],
       unique: [true, 'Location postCode Code is Unique'],
       trim: true,
     },

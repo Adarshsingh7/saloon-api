@@ -31,12 +31,12 @@ const userProfileSchema = new Schema(
     },
     address: {
       type: String,
-      required: [true, 'Customer Address is required'],
+      // required: [true, 'Customer Address is required'],
       trim: true,
     },
     postCode: {
       type: String,
-      required: [true, 'Post Code is required'],
+      // required: [true, 'Post Code is required'],
       trim: true,
     },
     phone_number: {
@@ -62,7 +62,7 @@ const userProfileSchema = new Schema(
     },
     referred_by: {
       type: String,
-      required: [true, 'Referred by is required'],
+      // required: [true, 'Referred by is required'],
     },
     preferred_location: {
       type: Schema.Types.ObjectId,

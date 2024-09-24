@@ -19,7 +19,7 @@ const userSchema = new Schema(
       // required: [true, 'Password is required'],
       trim: true,
       maxlength: 100,
-      minlength: 8,
+      minlength: 0,
     },
     passwordResetToken: {
       type: String,
