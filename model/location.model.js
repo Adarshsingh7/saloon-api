@@ -28,8 +28,8 @@ const locationSchema = new Schema(
     },
     postCode: {
       type: String,
-      required: [true, 'Location ZIP Code is Required'],
-      unique: [true, 'Location ZIP Code is Unique'],
+      required: [true, 'Location postCode Code is Required'],
+      unique: [true, 'Location postCode Code is Unique'],
       trim: true,
     },
   },
