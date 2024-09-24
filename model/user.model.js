@@ -9,14 +9,14 @@ const userSchema = new Schema(
   {
     userName: {
       type: String,
-      required: [true, 'userName is required'],
+      // required: [true, 'userName is required'],
       unique: [true, 'userName is unique'],
       trim: true,
     },
     password: {
       type: String,
       select: false,
-      required: [true, 'Password is required'],
+      // required: [true, 'Password is required'],
       trim: true,
       maxlength: 100,
       minlength: 8,
